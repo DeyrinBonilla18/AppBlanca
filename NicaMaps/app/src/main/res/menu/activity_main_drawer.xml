@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_my_complaints"
             android:title="Mis Denuncias" />
         <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Salir"/>
+        <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Slideshow"

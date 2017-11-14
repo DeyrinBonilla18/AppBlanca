@@ -22,23 +22,23 @@ import com.tumblr.remember.Remember;
 import com.uca.apps.isi.nct.Fragments.ComplaintsFragment;
 import com.uca.apps.isi.nct.Fragments.MyComplaintsFragment;
 import com.uca.apps.isi.nct.activities.ComplaintAddActivity;
+import com.uca.apps.isi.nct.activities.LogOut;
+import com.uca.apps.isi.nct.activities.SharedPrefManager;
 import com.uca.apps.isi.nct.activities.SignInActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public void validarSesion(){
-        if (Remember.getString("access_token", "").isEmpty()){
+    public void validarSesion() {
+        if (Remember.getString("access_token", "").isEmpty()) {
             Intent intent = new Intent(MainActivity.this, SignInActivity.class);
             startActivity(intent);
 
-        }
-        else {
+        } else {
             setContentView(R.layout.activity_main);
         }
 
     }
-
 
 
     @Override
@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
         onNavigationItemSelected(navigationView.getMenu().getItem(0).setTitle("Denuncias"));
-
 
 
     }
@@ -99,6 +98,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -106,12 +106,18 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         Class fragmentClass;
 
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.nav_denuncias:
                 fragmentClass = ComplaintsFragment.class;
                 break;
             case R.id.nav_misdenuncias:
                 fragmentClass = MyComplaintsFragment.class;
+                break;
+            case R.id.nav_logout:
+                fragmentClass = ComplaintsFragment.class;
+                SharedPrefManager.getInstance(this).logout();
+                finish();
+                startActivity(new Intent(this, SignInActivity.class));
                 break;
             default:
                 fragmentClass = ComplaintsFragment.class;
@@ -130,4 +136,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
